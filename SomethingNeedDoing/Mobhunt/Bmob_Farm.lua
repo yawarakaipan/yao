@@ -16,11 +16,12 @@ if not Player.Job.IsRangedDPS then
   return
 end
 
+local RouteName = nil
 if 33.0 < Player.Entity.Position.Z then
-  RootName = "South"
+  RouteName = "South"
   yield("/e [SND] 南ルートを巡回します")
 else
-  RootName = "North"
+  RouteName = "North"
   yield("/e [SND] 北ルートを巡回します")
 end
 
@@ -96,7 +97,7 @@ function SearchMob(X, Y, Z)
 end
 
 while true do
-  if RootName == "South" then
+  if RouteName == "South" then
     SearchMob(-39.7, 5.7, 316.3)
     SearchMob(39.0, 13.7, 279.2)
     SearchMob(96.6, 16.3, 243.7)
@@ -106,7 +107,7 @@ while true do
     SearchMob(143.9, 22.5, 88.8)
     SearchMob(122.1, 28.2, 66.1)
   end
-  if RootName == "North" then
+  if RouteName == "North" then
     SearchMob(-258.7, 69.6, -102.5)
     SearchMob(-302.1, 79.1, -144.7)
     SearchMob(-161.5, 75.9, -198.5)
