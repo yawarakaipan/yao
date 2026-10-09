@@ -48,7 +48,7 @@ function SearchMob(X, Y, Z)
       while IPC.vnavmesh.IsRunning() do
         yield("/vnav stop")
       end
-    else if not Entity.Player.IsMounted then
+    elseif not Entity.Player.IsMounted then
       yield("/action マウント・ルーレット")
       yield("/wait 1.5")
     end
