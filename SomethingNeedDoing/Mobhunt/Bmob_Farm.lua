@@ -1,7 +1,7 @@
 --[=====[
 [[SND Metadata]]
 author: yao
-version: 1.0.0
+version: 1.0.1
 
 [[End Metadata]]
 --]=====]
@@ -48,6 +48,9 @@ function SearchMob(X, Y, Z)
       while IPC.vnavmesh.IsRunning() do
         yield("/vnav stop")
       end
+    else if not Entity.Player.IsMounted then
+      yield("/action マウント・ルーレット")
+      yield("/wait 1.5")
     end
     yield("/wait 0.25")
   end
