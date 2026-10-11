@@ -1,13 +1,16 @@
 --[=====[
 [[SND Metadata]]
 author: yao
-version: 1.0.0
+version: 1.0.1
 
 [[End Metadata]]
 --]=====]
 
-if InstancedContent.GetCurrentContentId() == 0 then
-  yield("/e [SND] このマクロはコンテンツ内でのみ動作します")
+if
+  InstancedContent.GetCurrentContentId() == 0 and
+  IPC.Lifestream.GetRealTerritoryType() ~= 250
+then
+  yield("/e [SND] このマクロは特定のエリア／コンテンツ内でのみ動作します")
   return
 end
 
@@ -54,7 +57,10 @@ local CurrentJobActionName = GetCurrentJobActionName(CurrentJobId)
 
 local CurrentJobActionRange = GetCurrentJobActionRange(CurrentJobId)
 
-while InstancedContent.GetCurrentContentId() > 0 do
+while
+  InstancedContent.GetCurrentContentId() > 0 or
+  IPC.Lifestream.GetRealTerritoryType() == 250
+do
   IsGuarding = false
   if Player.Status then
     for i = 1, 30 do
@@ -74,7 +80,10 @@ while InstancedContent.GetCurrentContentId() > 0 do
     if Entity.Target then
       if
         Entity.Target.Name ~= Entity.Player.Name
-        and tostring(Entity.Target.Type) == "Pc: 1"
+        and (
+          tostring(Entity.Target.Type) == "Pc: 1" or
+          tostring(Entity.Target.Type) == "BattleNpc: 2"
+        )
         and Entity.Target.DistanceTo <= CurrentJobActionRange - 2
       then
         yield("/pvpac " .. CurrentJobActionName)
@@ -84,4 +93,4 @@ while InstancedContent.GetCurrentContentId() > 0 do
   yield("/wait 0.2")
 end
 
-yield("/e [SND] コンテンツ退出を検知したためマクロを終了します")
+yield("/e [SND] エリア移動／コンテンツ退出を検知したためマクロを終了します")
