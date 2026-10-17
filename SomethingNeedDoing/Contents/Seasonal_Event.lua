@@ -125,6 +125,7 @@ while Entity.Target and Entity.Target.Name == "怪しげな着ぐるみ" do
   yield("/wait 0.25")
 end
 VnavMoveTo(-55.7, 44.3, -84.9, "ドッド")
+yield("/wait 3")
 VnavMoveTo(-51.9, 6.5, -88.6, "パッティン")
 VnavMoveTo(-74.0, 7.9, -140.2)
 IPC.Lifestream.AethernetTeleport("グリダニア・ランディング")
