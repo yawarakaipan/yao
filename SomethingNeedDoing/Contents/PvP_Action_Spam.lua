@@ -1,7 +1,7 @@
 --[=====[
 [[SND Metadata]]
 author: yao
-version: 1.0.1
+version: 1.0.2
 
 [[End Metadata]]
 --]=====]
@@ -39,23 +39,11 @@ function GetCurrentJobActionName(CurrentJobId)
   else return "" end
 end
 
-function GetCurrentJobActionRange(CurrentJobId)
-  if Player.GetJob(CurrentJobId).IsTank or Player.GetJob(CurrentJobId).IsMeleeDPS then
-    return 5
-  elseif Player.GetJob(CurrentJobId).IsHealer or Player.GetJob(CurrentJobId).IsRangedDPS or Player.GetJob(CurrentJobId).IsMagicDPS then
-    return 25
-  else
-    return 0
-  end
-end
-
 yield("/e [SND] スキル回しを開始します")
 
 local CurrentJobId = Player.Job.Id
 
 local CurrentJobActionName = GetCurrentJobActionName(CurrentJobId)
-
-local CurrentJobActionRange = GetCurrentJobActionRange(CurrentJobId)
 
 while
   InstancedContent.GetCurrentContentId() > 0 or
@@ -75,7 +63,6 @@ do
     if CurrentJobId ~= Player.Job.Id then
       CurrentJobId = Player.Job.Id
       CurrentJobActionName = GetCurrentJobActionName(CurrentJobId)
-      CurrentJobActionRange = GetCurrentJobActionRange(CurrentJobId)
     end
     if Entity.Target then
       if
@@ -84,7 +71,7 @@ do
           tostring(Entity.Target.Type) == "Pc: 1" or
           tostring(Entity.Target.Type) == "BattleNpc: 2"
         )
-        and Entity.Target.DistanceTo <= CurrentJobActionRange - 2
+        and Entity.Target.DistanceTo <= 25
       then
         yield("/pvpac " .. CurrentJobActionName)
       end
